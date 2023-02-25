@@ -92,7 +92,7 @@ func _add_room(rng: RandomNumberGenerator, data: Dictionary, rooms: Array, room:
 					rng.randf_range(rect.position.y, rect.end.y)
 				))
 
-			poly_partial.sort_custom(func(a, b): return _lessv_x(a, b) if is_even else _lessv_y(a, b))
+			poly_partial.sort_custom(func(a, b): return Utils.lessv_x(a, b) if is_even else Utils.lessv_y(a, b))
 
 			if index > 1:
 				poly_partial.reverse()
@@ -130,11 +130,3 @@ func _intersects(rooms: Array, room: Rect2) -> bool:
 		if room.intersects(room_other):
 			return true
 	return false
-
-
-func _lessv_x(v1: Vector2, v2: Vector2) -> bool:
-	return v1.x < v2.x
-
-
-func _lessv_y(v1: Vector2, v2: Vector2) -> bool:
-	return v1.y < v2.y

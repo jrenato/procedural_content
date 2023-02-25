@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcivyb03ma6ml"]
+[gd_scene load_steps=3 format=3 uid="uid://db34y5cnadlcm"]
 
 [ext_resource type="Script" path="res://BasicDungeon/basic_dungeon.gd" id="1_4vpmf"]
-[ext_resource type="TileSet" uid="uid://dukeu77rodp7y" path="res://Common/tileset-prototype.tres" id="2_7ppar"]
+[ext_resource type="TileSet" uid="uid://bqlnpdaisfqk0" path="res://Common/Tilesets/tileset-prototype.tres" id="2_3vu5b"]
 
 [node name="BasicDungeon" type="Node2D"]
 script = ExtResource("1_4vpmf")
@@ -9,5 +9,5 @@ script = ExtResource("1_4vpmf")
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Level" type="TileMap" parent="."]
-tile_set = ExtResource("2_7ppar")
+tile_set = ExtResource("2_3vu5b")
 format = 2
