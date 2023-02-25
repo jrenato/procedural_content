@@ -10,6 +10,8 @@ extends Node2D
 @onready var camera: Camera2D = $Camera2D
 @onready var level: TileMap = $Level
 
+const FACTOR := 1.0 / 8.0
+
 
 func _ready() -> void:
 	_setup_camera()
@@ -47,7 +49,7 @@ func _generate_data() -> Array:
 		if _intersects(rooms, room):
 			continue
 
-		_add_room(data, rooms, room)
+		_add_room(rng, data, rooms, room)
 		if rooms.size() > 1:
 			var room_previous: Rect2 = rooms[-2]
 			_add_connection(rng, data, room_previous, room)
@@ -63,11 +65,44 @@ func _get_random_room(rng: RandomNumberGenerator) -> Rect2:
 	return Rect2(x, y, width, height)
 
 
-func _add_room(data: Dictionary, rooms: Array, room: Rect2) -> void:
+func _add_room(rng: RandomNumberGenerator, data: Dictionary, rooms: Array, room: Rect2) -> void:
 	rooms.push_back(room)
-	for x in range(room.position.x, room.end.x):
-		for y in range(room.position.y, room.end.y):
-			data[Vector2(x, y)] = null
+	if rng.randi_range(0, 1) == 0:
+		# rectangular room
+		for x in range(room.position.x, room.end.x):
+			for y in range(room.position.y, room.end.y):
+				data[Vector2(x, y)] = null
+	else:
+		# organic room
+		var unit := FACTOR * room.size
+		var order := [
+			room.grow_individual(-unit.x, 0, -unit.x, unit.y - room.size.y),
+			room.grow_individual(unit.x - room.size.x, -unit.y, 0, -unit.y),
+			room.grow_individual(-unit.x, unit.y - room.size.y, -unit.x, 0),
+			room.grow_individual(0, -unit.y, unit.x - room.size.x, -unit.y)
+		]
+		var poly := []
+		for index in range(order.size()):
+			var rect: Rect2 = order[index]
+			var is_even := index % 2 == 0
+			var poly_partial := []
+			for r in range(rng.randi_range(1, 2)):
+				poly_partial.push_back(Vector2(
+					rng.randf_range(rect.position.x, rect.end.x),
+					rng.randf_range(rect.position.y, rect.end.y)
+				))
+
+			poly_partial.sort_custom(func(a, b): return _lessv_x(a, b) if is_even else _lessv_y(a, b))
+
+			if index > 1:
+				poly_partial.reverse()
+			poly += poly_partial
+
+		for x in range(room.position.x, room.end.x):
+			for y in range(room.position.y, room.end.y):
+				var point := Vector2(x, y)
+				if Geometry2D.is_point_in_polygon(point, poly):
+					data[point] = null
 
 
 func _add_connection(rng: RandomNumberGenerator, data: Dictionary, room1: Rect2, room2: Rect2) -> void:
@@ -96,3 +131,10 @@ func _intersects(rooms: Array, room: Rect2) -> bool:
 			return true
 	return false
 
+
+func _lessv_x(v1: Vector2, v2: Vector2) -> bool:
+	return v1.x < v2.x
+
+
+func _lessv_y(v1: Vector2, v2: Vector2) -> bool:
+	return v1.y < v2.y
