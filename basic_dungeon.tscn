@@ -11,4 +11,3 @@ script = ExtResource("1_4vpmf")
 [node name="Level" type="TileMap" parent="."]
 tile_set = ExtResource("2_7ppar")
 format = 2
-layer_0/tile_data = PackedInt32Array(0, 0, 0)
