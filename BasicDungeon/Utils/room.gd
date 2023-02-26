@@ -43,7 +43,7 @@ func _iter_next(_arg) -> bool:
 
 
 func _iter_get(_arg) -> Vector2:
-	var offset := BasicDungeonUtils.index_to_xy(rect.size.x, _iter_index)
+	var offset := BasicUtils.index_to_xy(rect.size.x, _iter_index)
 	return rect.position + offset
 
 

@@ -39,7 +39,7 @@ func update(rect: Rect2) -> void:
 				rng.randf_range(rect_current.position.x, rect_current.end.x),
 				rng.randf_range(rect_current.position.y, rect_current.end.y)
 			))
-		poly_partial.sort_custom(func(a, b): return BasicDungeonUtils.lessv_x(a, b) if is_even else BasicDungeonUtils.lessv_y(a, b))
+		poly_partial.sort_custom(func(a, b): return BasicUtils.lessv_x(a, b) if is_even else BasicUtils.lessv_y(a, b))
 		if index > 1:
 			poly_partial.reverse()
 		poly += poly_partial
