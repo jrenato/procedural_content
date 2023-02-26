@@ -8,8 +8,8 @@ var _data: Array
 var _data_size: int
 
 
-func _init(rect: Rect2) -> void:
-	super(rect)
+func _init(new_rect: Rect2) -> void:
+	super(new_rect)
 	pass
 
 
@@ -17,17 +17,17 @@ func _iter_get(_arg) -> Vector2:
 	return _data[_iter_index]
 
 
-func update(rect: Rect2) -> void:
-	super(rect)
+func update(new_rect: Rect2) -> void:
+	super(new_rect)
 	var rng := RandomNumberGenerator.new()
 	rng.randomize()
 
-	var unit := FACTOR * rect.size
+	var unit := FACTOR * new_rect.size
 	var order := [
-		rect.grow_individual(-unit.x, 0, -unit.x, unit.y - rect.size.y),
-		rect.grow_individual(unit.x - rect.size.x, -unit.y, 0, -unit.y),
-		rect.grow_individual(-unit.x, unit.y - rect.size.y, -unit.x, 0),
-		rect.grow_individual(0, -unit.y, unit.x - rect.size.x, -unit.y)
+		new_rect.grow_individual(-unit.x, 0, -unit.x, unit.y - new_rect.size.y),
+		new_rect.grow_individual(unit.x - new_rect.size.x, -unit.y, 0, -unit.y),
+		new_rect.grow_individual(-unit.x, unit.y - new_rect.size.y, -unit.x, 0),
+		new_rect.grow_individual(0, -unit.y, unit.x - new_rect.size.x, -unit.y)
 	]
 	var poly = []
 	for index in range(order.size()):
@@ -45,8 +45,8 @@ func update(rect: Rect2) -> void:
 		poly += poly_partial
 
 	_data = []
-	for x in range(rect.position.x, rect.end.x):
-		for y in range(rect.position.y, rect.end.y):
+	for x in range(new_rect.position.x, new_rect.end.x):
+		for y in range(new_rect.position.y, new_rect.end.y):
 			var point := Vector2(x, y)
 			if Geometry2D.is_point_in_polygon(point, poly):
 				_data.push_back(point)

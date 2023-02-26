@@ -4,17 +4,17 @@ class_name BasicRoom
 var rect: Rect2
 
 var position : Vector2 = Vector2.ZERO :
-	set(value):
+	set(_value):
 		pass
 	get:
 		return rect.position
 var end : Vector2 = Vector2.ZERO :
-	set(value):
+	set(_value):
 		pass
 	get:
 		return rect.end
 var center : Vector2 = Vector2.ZERO :
-	set(value):
+	set(_value):
 		pass
 	get:
 		return 0.5 * (rect.position + rect.end)
@@ -23,13 +23,13 @@ var _rect_area: float
 var _iter_index: int
 
 
-func _init(rect: Rect2) -> void:
-	update(rect)
+func _init(new_rect: Rect2) -> void:
+	update(new_rect)
 
 
-func update(rect: Rect2) -> void:
-	self.rect = rect.abs()
-	_rect_area = rect.get_area()
+func update(new_rect: Rect2) -> void:
+	rect = new_rect.abs()
+	_rect_area = new_rect.get_area()
 
 
 func _iter_init(_arg) -> bool:
