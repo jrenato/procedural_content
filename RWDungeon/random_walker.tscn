@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp04yohqgjqjo"]
+
+[ext_resource type="TileSet" uid="uid://bqlnpdaisfqk0" path="res://Common/Tilesets/tileset-prototype.tres" id="1_1p1t0"]
+[ext_resource type="Script" path="res://RWDungeon/random_walker.gd" id="1_xdqyi"]
+
+[node name="RandomWalker" type="Node2D"]
+script = ExtResource("1_xdqyi")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Level" type="TileMap" parent="."]
+tile_set = ExtResource("1_1p1t0")
+format = 2
