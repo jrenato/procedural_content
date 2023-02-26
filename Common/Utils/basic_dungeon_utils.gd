@@ -1,4 +1,4 @@
-class_name Utils
+class_name BasicDungeonUtils
 
 
 static func lessv_x(v1: Vector2, v2: Vector2) -> bool:
